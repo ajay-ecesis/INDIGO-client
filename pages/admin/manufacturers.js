@@ -25,25 +25,150 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import Moment from 'react-moment';
 import {toast} from 'react-toastify'
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
   
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+  }
+
+  function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+  }
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
       '& > * + *': {
         marginTop: theme.spacing(2),
       },
+   
     },
+    paper: {
+        position: 'absolute',
+        width: 500,
+        height:300,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        textAlign:'center'
+      },
+    
 }));
 
 const ManageManufacturers = () => {
-
+    const classes = useStyles();
     const [ btnLoading, setBtnloading] = useState(true);
-
+    const [rejectuser,setrejectuser]  = useState('');
     const [manufacturers, setManufacturers] = useState([])
+    const [modalStyle] = useState(getModalStyle);
+    const [open, setOpen] = useState(false);
+    const [reason,setreason] = useState('');
+     
+      const handleClose = () => {
+        setOpen(false);
+      };
+      const handlereason =(e)=>{ 
+        setreason(e.target.value);
+    }
+    const userstatus = (status)=>{
+        switch (status) {
+            case 0:
+            return <h6 style={{color:"orange"}}>Inactive</h6>;
+            case 1:
+                return <h6 style={{color:"green"}}>Active</h6>;
+            case 2:
+                return <h6 style={{color:"blue",textAlign:'center'}}>Waiting for approval</h6>;
+            case 3:
+                return <h6 style={{color:"pink"}}>Admin rejected</h6>;
+            case 4:
+                return <h6 style={{color:"red"}}>Deleted</h6>;
+        }
+    }
+    const deactivate = async(userId) =>{
+        try{
+            let {data} = await axios.put('/api/admin/user/status/deactivate',{
+                id:userId
+            })
+            loadManufacturers();
+            toast.success("De-activated");
+        }catch(error){
+            loadManufacturers();
+            toast.error(error.response.data)
+        }
+    }
+
+    const activate = async(userId) =>{
+        try{
+            let {data} = await axios.put('/api/admin/user/status/activate',{
+                id:userId
+            })
+            loadManufacturers();
+            toast.success("activated");
+        }catch(error){
+            loadManufacturers();
+            toast.error(error.response.data)
+        }
+    }
+
+    const approve = async(userId)=>{
+        try{
+            let {data} = await axios.put('/api/admin/user/status/approve',{
+                id:userId
+            })
+            loadManufacturers();
+            toast.success("Successfully approved registration request");
+        }catch(error){
+            loadManufacturers();
+            toast.error(error.response.data)
+        }
+       
+    }
+
+    const reject =async (userId)=>{
+        // console.log("the rejection reason is",reason)
+        try{
+            let {data} = await axios.put('/api/admin/user/status/reject',{
+                id:rejectuser,
+                reason:reason
+            })
+           setreason('');
+           setOpen(false)
+           loadManufacturers();
+            toast.success("Successfully Rejected registration request");
+        }catch(error){
+            loadManufacturers();
+            toast.error(error.response.data)
+        }
+        
+    }
+    const body =(
+        <div style={modalStyle} className={classes.paper}>
+            <form >
+              <h5>Reason for rejection</h5>
+                <textarea onChange={handlereason} style={{width:'100%',height:'150px'}} value={reason} />
+                <Button onClick={(e)=>reject()} variant="outlined" color="secondary">Submit</Button>
+            </form>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </div>
+    )
+const handlereject = (id)=>{
+    setOpen(true);
+    setrejectuser(id)
+}
 
     const tableIcons = {
         Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -76,19 +201,31 @@ const ManageManufacturers = () => {
         /* {title: "Daily Capacity", field: "dailyCapacity"}, */
         {title: "Monthly Capacity", field: "monthlyCapacity"},
         {title: "Status", field: "status", render: rowData => {
-            return rowData.userId.status === 0 ? <h6 style={{color:"green"}}>Active</h6> :
-            <h6 style={{color:"red"}}>Deleted</h6>
+            return userstatus(rowData.userId.status);
         }},
         {title: "Created At", render: rowData => {return <Moment format='DD/MM/YYYY'>{rowData.createdAt}</Moment>}},
         {title: "Updated At", render: rowData => {return <Moment format='DD/MM/YYYY'>{rowData.updatedAt}</Moment>}},
         {title: "Actions", render: rowData => <Link href={`/admin/manufacturer/edit/${rowData._id}`}><a style={{color:"#106eea"}}><Edit /></a></Link>},
         {title: "",render: rowData => {
             if(rowData.userId.status === 0){
-                return <span style={{color:"red", cursor:'pointer'}} onClick={() => destroy(rowData.userId._id, 1)}><DeleteOutline /></span>
+                return  <Button variant="outlined" color="primary" onClick={()=>activate(rowData.userId._id)}>Activate</Button>
             }
             else if(rowData.userId.status === 1){
-                return <h5 style={{color:"green", cursor:'pointer'}} onClick={() => destroy(rowData.userId._id, 0)}>Activate</h5>
+                return <Button variant="outlined" color="secondary" onClick={()=>deactivate(rowData.userId._id)}>Deactivate</Button>
             }
+            else if(rowData.userId.status === 2){
+                return <div style={{display:'flex',flexDirection:'column'}}>
+                    <Button variant="contained" color="primary" onClick={()=>approve(rowData.userId._id)}>Approve</Button>
+                    <Button variant="contained" color="secondary" onClick={()=>{handlereject(rowData.userId._id)}}>Reject</Button>
+                </div>
+            }  else if(rowData.userId.status === 3){
+                return <div style={{display:'flex',flexDirection:'column'}}>
+                    <Button variant="contained" color="primary" onClick={()=>approve(rowData.userId._id)}>Approve</Button>
+                </div>
+            }
+        }},
+        {title: "", render: rowData => {
+            return <span style={{color:"red", cursor:'pointer'}} onClick={() => destroy(rowData.userId._id, 1)}><DeleteOutline /></span>
         }},
     ]
 
@@ -116,13 +253,13 @@ const ManageManufacturers = () => {
         else if(status === 1){
             tempStatus = "delete"
         }
-        if(window.confirm(`Do you want to ${tempStatus} this brand?`)){
+        if(window.confirm(`Do you want to ${tempStatus} this manufacturer?`)){
             try {
                 setBtnloading(true);
                 let { data } = await axios.put(`/api/update/user/status`, {
                     userId, status
                 })
-                toast.success("Brand successfully deleted.")
+                toast.success("Manufacturer successfully deleted.")
                 loadManufacturers()
             } catch (error) {
                 setBtnloading(false);
@@ -156,10 +293,20 @@ const ManageManufacturers = () => {
                                     }}
                                     localization={{ body:{ emptyDataSourceMessage:<h6>No manufacturers to display</h6> } }}
                                 />
+                                <Modal
+                                    open={open}
+                                    onClose={()=>handleClose()}
+                                    aria-labelledby="simple-modal-title"
+                                    aria-describedby="simple-modal-description"
+                                >
+                                    {body}
+                                </Modal> 
                             </div>
                         </div>
+                    
                     </div>
-                </div>    
+                </div>  
+                
             </AdminLayout>
         </AdminRoute>
     )

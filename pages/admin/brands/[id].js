@@ -50,6 +50,21 @@ const brandDetails = () => {
         }
     },[id])
 
+    const userstatus = (status)=>{
+        switch (status) {
+            case 0:
+            return "Inactive";
+            case 1:
+                return "Active";
+            case 2:
+                return "Waiting for approval";
+            case 3:
+                return "Deleted";
+        }
+    }
+
+
+
     const showbrandDetails = () => (
         <div className="card mb-4 bord-line">
             <div className="card-body">
@@ -71,7 +86,7 @@ const brandDetails = () => {
                         <p className="card-text"><b>City: </b>{brand.userId.city}</p>  
                         <p className="card-text"><b>Zip Code: </b>{brand.userId.zipCode}</p>     
                         <p className="card-text"><b>Country: </b>{brand.userId.country}</p>
-                        <p className="card-text"><b>Status: </b>{brand.userId.status === 0 ? 'Active' : "Deactivated"}</p>                
+                        <p className="card-text"><b>Status: </b>{userstatus(brand.userId.status)}</p>                
                     </div>
                 </div>
             </div>

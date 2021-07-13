@@ -8,17 +8,58 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios'
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+
+
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+  }
+
+  function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+  }
+  
 
 const useStyles = makeStyles((theme) => ({
     backdrop: {
       zIndex: theme.zIndex.drawer + 1,
       color: '#fff',
     },
+    paper: {
+        position: 'absolute',
+        width: 500,
+        height:300,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        textAlign:'center'
+      },
 }));
 
 const EditBrand = () => {
 
     const classes = useStyles();
+
+    const [modalStyle] = useState(getModalStyle);
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
+    
 
     const router = useRouter()
 
@@ -39,6 +80,8 @@ const EditBrand = () => {
         firstName:'',
         lastName:'',
         email:'',
+        status:'',
+        emailverified:'',
         category:'',
         city:'',
         zipCode:'',
@@ -50,7 +93,9 @@ const EditBrand = () => {
         url:'',
     })
             
-    const {userId, firstName, lastName, email, category, city, zipCode, country, brandName, linkedIn, market,url} = brandValues
+    const {userId, firstName, lastName, email, category, city, zipCode, country, brandName, linkedIn, market,url,status,emailverified} = brandValues
+    
+    const [reason,setreason] = useState('');
 
     const loadBrand = async (id) => {
         try {
@@ -59,6 +104,7 @@ const EditBrand = () => {
                 brandId: id
             })
             setBrand(data);
+            // console.log(data)
             if(data){
                 setBrandValues({
                     userId: data.userId._id,
@@ -73,6 +119,8 @@ const EditBrand = () => {
                     brandName: data.brandName,
                     linkedIn: data.linkedIn, 
                     url: data.url,
+                    status:data.userId.status,
+                    emailverified:data.userId.emailVerified
                 })
             }
             setLoading(false);
@@ -114,6 +162,19 @@ const EditBrand = () => {
         }
     },[id])
 
+    const approve = async()=>{
+        try{
+            let {data} = await axios.put('/api/admin/user/status/approve',{
+                id:userId
+            })
+            setBrandValues({...brandValues,status:data.status})
+            toast.success("Successfully approved registration request");
+        }catch(error){
+            toast.error(error.response.data)
+        }
+       
+    }
+
     const handleChange = name => event => {
         setBtnloading(false);
         setBrandValues({...brandValues, [name]: event.target.value})
@@ -127,10 +188,11 @@ const EditBrand = () => {
                 Id: id, 
                 userId,
                 firstName, lastName, email, category, city, zipCode, country,
-                brandName, linkedIn, market, url
+                brandName, linkedIn, market, url, 
+                emailVerified:emailverified
             })
             setBtnloading(false)
-            console.log("Data", data);
+            // console.log("Data", data);
             toast.success("Successfully Updated");
             router.push('/admin/brands');
 
@@ -141,6 +203,63 @@ const EditBrand = () => {
         }
     }
 
+    const showstatusupdate = (status)=>{
+        switch (status) {
+            case 0:
+            return <h6 style={{color:"orange"}}>Status: Inactive</h6>;
+           
+            case 1:
+                return <h6 style={{color:"green"}}>Status: Active</h6>;
+            case 2:
+                return <>
+                <div>
+                    <h6>Status: Waiting for approval</h6>
+                </div>
+                <div style={{display:'flex'}}>
+                <Button onClick={()=>approve()} variant="contained" color="primary">Approve</Button>
+                <Button variant="contained" onClick={handleOpen} color="secondary">Reject</Button>
+            </div>
+            </>
+            case 3:
+                return <h6 style={{color:"red"}}>Status :Admin rejected</h6>;
+            case 4:
+                return <h6 style={{color:"red"}}>Status :Deleted</h6>;
+        }
+    }
+    const handlereason =(e)=>{
+        
+        setreason(e.target.value);
+    }
+
+    const reject =async ()=>{
+        // console.log("the rejection reason is",reason)
+        try{
+            let {data} = await axios.put('/api/admin/user/status/reject',{
+                id:userId,
+                reason:reason
+            })
+           setreason('');
+           setOpen(false)
+            toast.success("Successfully Rejected registration request");
+            setBrandValues({...brandValues,status:data.status})
+        }catch(error){
+            toast.error(error.response.data)
+        }
+        
+    }
+
+    const body =(
+        <div style={modalStyle} className={classes.paper}>
+            <form >
+                <h5>Reason for rejection</h5>
+                <textarea onChange={handlereason} style={{width:'100%',height:'150px'}} value={reason} />
+                <Button onClick={(e)=>reject(e)} variant="outlined" color="secondary">Submit</Button>
+            </form>
+            <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </div>
+    )
     const showUpdateForm = () => (
         <form onSubmit={clickSubmit}>
             <div className="form-group">
@@ -154,6 +273,18 @@ const EditBrand = () => {
             <div className="form-group">
                 <label className="text-muted">Email<span style={{color:"red"}}> *</span></label>
                 <input onChange={handleChange('email')} type="email" className="form-control" value={email} readOnly required/>
+            </div>
+            <div className="form-group">
+            <label htmlFor="verified" className="text-muted">Email verification status<span style={{color:"red"}}> *</span></label>
+                <div>
+                    <label htmlFor="verified" className="text-muted">verified</label> &nbsp;
+                    <input type="radio" id="verified" name="verification" value={true} checked={emailverified} onChange={(e)=>setBrandValues({...brandValues,emailverified:e.target.checked})} />
+                </div>
+                <div>
+                    <label htmlFor="notverified" className="text-muted">Not verified </label> &nbsp;
+                    <input type="radio" id="notverified" name="verification" value={false} checked={!emailverified} onChange={(e)=>setBrandValues({...brandValues,emailverified:!e.target.checked})} />
+                </div>
+                {/* <input onChange={handleChange('email')} type="email" className="form-control" value={email} readOnly required/> */}
             </div>
             <div className="form-group">
                 <label className="text-muted">City<span style={{color:"red"}}> *</span></label>
@@ -208,7 +339,9 @@ const EditBrand = () => {
             <div className="form-group"> 
                 <label className="text-muted">linkedIn</label>
                 <input onChange={handleChange('linkedIn')} type="text" className="form-control" value={linkedIn}/>
-            </div>      
+            </div> 
+            {showstatusupdate(status)}
+          
             <center>
                  <br/>
                  <button className="btn btn-outline-primary" disabled={btnloading}> {btnloading ? "Loading..." : "Update"} </button>
@@ -241,6 +374,14 @@ const EditBrand = () => {
                         </div>
                     </div>
                 </div>
+                <Modal
+                open={open}
+                onClose={()=>handleClose()}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                {body}
+            </Modal>
                 <Backdrop className={classes.backdrop} open={loading} >
                     <CircularProgress color="inherit" />
                 </Backdrop>
