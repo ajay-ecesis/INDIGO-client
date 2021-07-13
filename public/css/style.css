@@ -776,19 +776,19 @@ section.section.artisanalExperiences.Plans .row.Artisanal-slider .col-md-4 img {
   min-height: 250px;
 }
 .slick-next {
-  background-image: url(../images/arrows.png) !important;
-  position: absolute !important;
-  right: -50px !important;
-  height: 32px !important;
-  width: 32px !important;
+  background-image: url(../images/arrows.png);
+  position: absolute;
+  right: -50px;
+  height: 32px;
+  width: 32px;
 }
 .slick-prev {
-  background-image: url(../images/arrows.png) !important;
-  position: absolute !important;
-  left: -50px !important;
-  height: 32px !important;
-  transform: rotate(180deg) !important;
-  width: 32px !important;
+  background-image: url(../images/arrows.png);
+  position: absolute;
+  left: -50px;
+  height: 32px;
+  transform: rotate(180deg);
+  width: 32px;
 }
 .slick-prev:hover {
   opacity: 1;
@@ -4129,6 +4129,7 @@ section.section.bottom_sticky_options {
   left: 0;
   width: 100%;
   display: none;
+  z-index: 222;
 }
 .section.bottom_sticky_options .row >div {
   text-align: center;
@@ -4149,7 +4150,7 @@ section.section.bottom_sticky_options {
 .section.search_mobile_section{
   padding: 0 !important;
   position: absolute;
-  top: 71%;
+  top: 65%;
   left:0;
   z-index: 111;
   display: none;
@@ -4303,13 +4304,23 @@ li.l-footer02-nav-item.border_custom  {
 .header.terms-privacy .humburger-span {
     background-color: #000;
 }
+.banner.dashboard-banner .row.dashboard_navbar > div .logo__title {
+    align-items: center;
+    display: flex;
+}
 
 
 
 
-
-
-
+/*  search results */
+.section.latest-search-section.suppliers-section.search_results_list.middle_section .search-card .title {
+    font-size: 20px;
+}
+#results_outer .latest-search-section .latest-search-slider h5.catagory, #results_outer .latest-search-section .latest-search-slider p.timing {
+    font-size: 8px;
+    line-height: 11px;
+    margin-bottom: 0;
+}
 
 
 

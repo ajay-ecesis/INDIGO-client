@@ -162,15 +162,15 @@ const Footer = () => {
                                           </div>
                                         </li>
                                         <li className="l-footer02-nav-item">
-                                          <h2 className="l-footer02-nav-title js-dropdown-footer c-btn c-btn-hover01"> <a href="http://claruz.com/indigo/terms-and-conditions.html">Terms & condition</a><span className="c-btn-bg-bottom"></span><i className="fa fa-chevron-down"></i></h2>
+                                          <h2 className="l-footer02-nav-title js-dropdown-footer c-btn c-btn-hover01 terms-condition-heading">Terms & condition<span className="c-btn-bg-bottom"></span><i className="fa fa-chevron-down"></i></h2>
                                           <div className="l-footer02-nav-panel js-dropdown-footer-menu" style={{display: 'none'}}>
                                                     <section className="section privacy_policy_section">
           <div className="container-fluid">
               <div className="row">
                   <div className="col-md-12">
-                      <h1 className="heading">
+                      {/* <h1 className="heading">
                           Terms and conditions
-                      </h1>
+                      </h1> */}
                       <h6>1. INTRODUCTION</h6>
                       <p>1.1 Welcome to the Common Objective (CO) website. Common Objective is a trading name of the Ethical Fashion Group Limited (“EFG” “we”, “us”, “our”), an impact company dedicated to furthering sustainable and ethical business. These Terms of Use (“Terms of Use”), together with any documents referred to below, govern the way in which you may use our website, which is accessible at https://www.commonobjective.co/ and any related domains (the “Site”), whether as a visitor to the Site or as a registered user. Please read through these Terms of Use carefully before you start to use the Site as they form a legally binding contract between you and us relating to your use of the Site. By using the Site, you accept these Terms of Use and agree to be bound by them. If you do not accept these Terms of Use, please refrain from using the Site. <br/> <br/> 1.2 EFG may, at our sole discretion and at any time make changes to these Terms of Use. If we do this, we will either post the changes on this page or, we may send an email to registered users notifying them of any changes. We will indicate the effective date of any change to the Terms of Use at the top of the page. You should, however, check this page on a regular basis to take notice of any changes. <br/><br/>1.3 If you find any change to these Terms of Use unacceptable, you should stop using the Site immediately. If you continue to use the Site following a new set of terms being posted on the Site, you will be deemed to have accepted such new Terms of Use and will be legally bound by them. <br/><br/></p>
                       <h6>2. ACCESSING THE SITE</h6>
@@ -215,15 +215,15 @@ const Footer = () => {
                                           </div>
                                         </li>
                                         <li className="l-footer02-nav-item">
-                                          <h2 className="l-footer02-nav-title js-dropdown-footer c-btn c-btn-hover01">Privacy policy <span className="c-btn-bg-bottom"></span><i className="fa fa-chevron-down"></i></h2>
+                                          <h2 className="l-footer02-nav-title js-dropdown-footer c-btn c-btn-hover01 terms-condition-heading">Privacy policy <span className="c-btn-bg-bottom"></span><i className="fa fa-chevron-down"></i></h2>
                                           <div className="l-footer02-nav-panel js-dropdown-footer-menu" style={{display: 'none'}}>
                                               <section className="section privacy_policy_section">
                                                   <div className="container-fluid">
                                                       <div className="row">
                                                           <div className="col-md-12">
-                                                              <h1 className="heading">
+                                                             {/*  <h1 className="heading">
                                                                   Privacy policy
-                                                              </h1>
+                                                              </h1> */}
                                                               <p>We are Ethical Fashion Group Limited (“us”, “we” and “our”), and our registered office is at 3 Princes Street, London, W1B 2LD. <br/><br/>This Privacy & Cookies Policy and our Terms of Use (https://www.commonobjective.co/terms-of-use) set out the basis on which we will process any personal data that we collect from you, or that you provide to us, through our website at https://www.commonobjective.co/ (the “Site”). By “personal data”, we mean any information which directly or indirectly identifies you and including any identifiers such as IP address. <br/><br/>We are the data controller responsible for processing your personal data. If you have any questions, please contact us via (Info@commonobjective.co). Please read the following carefully to understand what information we collect, how we use and share that information and how we use cookies. <br/><br/></p>
                                                               <h6>1. INFORMATION WE COLLECT ABOUT YOU</h6>
                                                               <p>Information you provide to us: <br/><br/>We collect information from you that you provide to us via the Site. This includes any information that you post or upload to the Site and any information you provide to us when you register on the Site, participate in online discussion forums, fill out any form, complete surveys or enter competitions and promotions. It also includes information you give us when you contact us with feedback, report a problem with the Site or communicate with us for any other reason. <br/><br/>This information may include your name, email address, your interests, your location, your image, what you are looking for, your job role and experience, your skills, and information about the organisation that you work for. <br/><br/>Information we collect about you: <br/><br/>With regard to each of your visits to the Site we will automatically collect the following information: <br/><br/>Technical information which may include your IP address, operating system and browser type. <br/>Details of your visits to the Site which may include traffic data, location data, weblogs, search data, other communication data, and the people and organisations that you click on, connect with, message, view, bookmark or share (e.g. articles, resources, video, individual and business profiles and ads (this could include ads on or off the Site)). <br/>Purchase details which may include links to third party goods and services that you click on and any purchases made by you of such third party goods and services. <br/>

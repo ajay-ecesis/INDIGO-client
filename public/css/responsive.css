@@ -267,6 +267,13 @@ section.explore.stories.section.trustBrand.manufacturers.brands .bottom-content 
 section.explore.stories.section.trustBrand.manufacturers.brands.product-detail .col-9 {
     width: 80%;
 }
+.banner.dashboard-banner .row.dashboard_navbar > div {
+    width: 40%;
+}
+.banner.dashboard-banner .row.dashboard_navbar > div:last-child {
+    width: 20% !important;
+    text-align: right;
+}
 }
 
 @media screen and (max-width: 1440px) {
@@ -520,10 +527,10 @@ section.explore.stories.section.trustBrand.manufacturers.brands .bottom-content 
     width: 60% !important;
   }
   section.section.products .slick-next {
-    right: -20px!important;
+    right: -20px !important;
   }
   section.section.products .slick-prev {
-    left: -20px!important;
+    left: -20px !important;
   }
   .section.trustBrand.trustBrand-change .bottom_speed {
     flex-wrap: wrap;
@@ -3255,9 +3262,41 @@ section.section.artisanalExperiences.Plans.bottom-blog-gallery-section.artisnal-
 .bottom-blog-gallery-section .Artisanal-slider_second i.fas.fa-arrow-right {
     font-size: 20px;
 }
+.main_banner_new.about_us_banner.new.about-changed.about-main .Nav {
+    position: unset;
+}
+.main_banner_new.about_us_banner.new.about-changed.about-main h1 {
+    width: 83%;
+}
+footer.footer.formobile .terms-condition-heading {
+    font-weight: 800 !important;
+}
+footer.footer.formobile section.section.privacy_policy_section .row .col-md-12 {
+    height: 400px;
+    overflow-y: auto;
+}
+section.section.select-cloth-section .row .cloth-col p {
+    font-size: 12px;
+}
+
+
 }
 
 
 
+
+
+
+@media screen and (max-width: 400px) and (min-width:376px){
+    .section.search_mobile_section{
+        top: 56%;
+}
+}
+
+@media screen and (max-width: 360px){
+    .section.search_mobile_section{
+        top: 71%;
+}
+}
 
 

@@ -91,14 +91,13 @@ const About = (props) => {
           </Head>
          
           
-          <div className="main_banner_new about_us_banner story_banner">
+          <div className="main_banner_new about_us_banner new about-changed about-main">
           <Navbar preview={props.preview} nav={props.nav} />
               <div className="banner">
-              <div id="bannerWrapper" className="banner-wrapper">
                   <div>
                     <a className="backArrow" href={props.prevUrl}> <img src="/images/back-arrow.svg" alt="" /> </a>
                   </div>
-                  
+              <div id="bannerWrapper" className="banner-wrapper">
                     
                     <div className="bg-img_banner new bg-img_about">
                       <img src={urlFor(data[0]?.mainimage)} alt="" />
