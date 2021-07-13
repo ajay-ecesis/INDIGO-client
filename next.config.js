@@ -242,6 +242,46 @@ module.exports = {
         source:'/api/user/resetpassword',
         destination:`${process.env.EXTERNAL_RESOLVER}/api/user/resetpassword`
       },
+      //approve registration
+      {
+        source:'/api/admin/user/status/approve',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/user/status/approve`
+      },
+      //reject registration
+      {
+        source:'/api/admin/user/status/reject',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/user/status/reject`
+      },
+      //activate user
+      {
+        source:'/api/admin/user/status/activate',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/user/status/activate`
+      },
+      // deactivate user
+      {
+        source:'/api/admin/user/status/deactivate',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/user/status/deactivate`
+      },
+      //admin notifications
+      {
+        source:'/api/admin/notifications',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/notifications`
+      },
+      //mark notification as read
+      {
+        source:'/api/admin/messages/markasread',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/messages/markasread`
+      },
+      // get brand from userid
+      {
+        source:'/api/admin/getbrandfromuserid',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/getbrandfromuserid`
+      },
+      // get manufacturer from userid
+      {
+        source:'/api/admin/getmanufacturerfromuserid',
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/getmanufacturerfromuserid`
+      }
     ]
   },
 }

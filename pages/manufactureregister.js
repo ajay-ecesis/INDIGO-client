@@ -1,8 +1,8 @@
+import {useState, useRef} from 'react'
 import Navbar from "../pagecomponents/Navbar";
 import { client } from "../utils/sanity";
 import Head from "next/head";
 import {toast} from 'react-toastify'
-import {useState} from 'react'
 import axios from 'axios'
 import Footer from '../pagecomponents/Footer';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -15,6 +15,28 @@ const manufacture = (props) => {
     const [visibility1,setvisibility1] = useState('password');
 
     const [open, setOpen] = useState(false);
+
+    // For Input Focus
+    const supplierNameRef = useRef();
+    const yearRef = useRef();
+    const employeesRef = useRef();
+    const skuRef = useRef();
+    const samplingTimeRef = useRef();
+    const monthlyCapacityRef = useRef();
+    const headingRef = useRef();
+    const factoryInfoRef = useRef();
+    const addressLine1Ref = useRef();
+    const firstNameRef = useRef();
+    const lastNameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const password1Ref = useRef();
+    const cityRef = useRef();
+    const countryRef = useRef();
+    const zipCodeRef = useRef();
+    const certificationsRef = useRef();
+    const multiphotosRef = useRef();
+    
 
     // Register Manufacturer values
     const [regManufacturerValues, setRegManufacturerValues] = useState({
@@ -124,7 +146,70 @@ const manufacture = (props) => {
             return window.scrollTo(0, 0);
           
         } catch (error) {
-            toast.error(error.response.data);
+            var err = error.response.data;
+            if(err.allEmpty){
+                supplierNameRef.current.focus()
+            }
+            else if(err.supplierName){
+                supplierNameRef.current.focus()
+            }
+            else if(err.year){
+                yearRef.current.focus()
+            }
+            else if(err.employees){
+                employeesRef.current.focus();
+                employeesRef.current.style.border = '1px solid red';
+            }
+            else if(err.sku){
+                skuRef.current.focus()
+            }
+            else if(err.samplingTime){
+                samplingTimeRef.current.style.border = '1px solid red';
+                samplingTimeRef.current.focus()
+            }
+            else if(err.heading){
+                headingRef.current.focus()
+            }
+            else if(err.factoryInfo){
+                factoryInfoRef.current.focus()
+            }
+            else if(err.addressLine1){
+                addressLine1Ref.current.focus()
+            }
+            else if(err.certifications){
+                certificationsRef.current.focus()
+            }
+            else if(err.multiphotos){
+                multiphotosRef.current.focus()
+            }
+            else if(err.firstName){
+                firstNameRef.current.focus()
+            }
+            else if(err.lastName){
+                lastNameRef.current.focus()
+            }
+            else if(err.email){
+                emailRef.current.focus()
+            }
+            else if(err.password){
+                passwordRef.current.focus()
+            }
+            else if(err.password1){
+                password1Ref.current.focus()
+            }
+            else if(err.city){
+                cityRef.current.style.border = '1px solid red';
+                cityRef.current.focus()
+            }
+            else if(err.zipCode){
+                zipCodeRef.current.focus()
+            }
+            else if(err.country){
+                countryRef.current.style.border = '1px solid red';
+                countryRef.current.focus()
+            }
+
+            toast.error(err.message);
             setRegManufacturerValues({...regManufacturerValues, loading: false})
         }
     }
@@ -158,6 +243,19 @@ const manufacture = (props) => {
             const message = event.target.value.slice(0, event.target.maxLength);
             setRegManufacturerValues({...regManufacturerValues, [name]:message, loading: false})
             return;
+        }
+
+        if(name === "samplingTime"){
+            samplingTimeRef.current.style.border = '';
+        }
+        else if(name === "employees"){
+            employeesRef.current.style.border = '';
+        }
+        else if(name === "city"){
+            cityRef.current.style.border = '';
+        }
+        else if(name === "country"){
+            countryRef.current.style.border = '';
         }
 
         if(name === "certifications"){
@@ -201,6 +299,8 @@ const manufacture = (props) => {
             }
         }
         else {
+            employeesRef.current.style.border = '';
+            samplingTimeRef.current.style.border = '';
             setRegManufacturerValues({...regManufacturerValues, [name]:event.target.value, loading: false})
         }       
     }
@@ -265,7 +365,7 @@ const manufacture = (props) => {
             return (
                 <>
                     <div className="form-heading">
-                        <h6>Registration Successfull, Please <a style={{textDecoration:'underline', color:'#106eea'}} href="/signin">Login</a> to continue.</h6>
+                        <h6>Thanks for registering with us. You will get an email once your registration is approved.</h6>
                     </div>
             </>
             )
@@ -306,13 +406,13 @@ const manufacture = (props) => {
                     </div>
                     {!open ? <form onSubmit={clickSubmitRegManufacturer}>
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegManufacturer('supplierName')} placeholder="Supplier name *" value={regManufacturerValues.supplierName}  />
+                            <input type="text" onChange={handleChangeRegManufacturer('supplierName')} placeholder="Supplier name *" value={regManufacturerValues.supplierName} ref={supplierNameRef}  />
                         </div>
                         <div className="form-group">
-                            <input type="number" onChange={handleChangeRegManufacturer('year')} onBlur={handleClick('year')} maxLength="4" placeholder="Year established *" value={regManufacturerValues.year} />
+                            <input type="number" onChange={handleChangeRegManufacturer('year')} onBlur={handleClick('year')} maxLength="4" placeholder="Year established *" value={regManufacturerValues.year} ref={yearRef} />
                         </div>
                         <div className="form-group form-group-change full-width">
-                            <select onChange={handleChangeRegManufacturer('employees')} placeholder="Number of employees *" defaultValue={regManufacturerValues.employees}>
+                            <select onChange={handleChangeRegManufacturer('employees')} placeholder="Number of employees *" defaultValue={regManufacturerValues.employees} ref={employeesRef}>
                                 <option value="" disabled hidden>Number of employees *</option>
                                 <option value="1 - 100">1 - 100</option>
                                 <option value="100 - 300">100 - 300</option>
@@ -339,10 +439,10 @@ const manufacture = (props) => {
                         </div>
                      
                         <div className="form-group">
-                            <input type="number" onChange={handleChangeRegManufacturer('sku')} placeholder="Minimum order per SKU *" value={regManufacturerValues.sku}  />
+                            <input type="number" onChange={handleChangeRegManufacturer('sku')} placeholder="Minimum order per SKU *" value={regManufacturerValues.sku} ref={skuRef}  />
                         </div>
                         <div className="form-group form-group-change full-width">
-                            <select onChange={handleChangeRegManufacturer('samplingTime')} placeholder="Sampling time in weeks" defaultValue={regManufacturerValues.samplingTime} >
+                            <select onChange={handleChangeRegManufacturer('samplingTime')} placeholder="Sampling time in weeks" defaultValue={regManufacturerValues.samplingTime} ref={samplingTimeRef} >
                                 <option value="" disabled hidden>Sampling time in weeks *</option>
                                 <option value="2 Weeks">2 Weeks</option>
                                 <option value="3 Weeks">3 Weeks</option>
@@ -351,7 +451,7 @@ const manufacture = (props) => {
                         </div>
                       
                         <div className="form-group">
-                            <input type="number" onChange={handleChangeRegManufacturer('monthlyCapacity')} placeholder="Maximum monthly capacity *" value={regManufacturerValues.monthlyCapacity} />
+                            <input type="number" onChange={handleChangeRegManufacturer('monthlyCapacity')} placeholder="Maximum monthly capacity *" value={regManufacturerValues.monthlyCapacity} ref={monthlyCapacityRef} />
                         </div>
                         <div className="form-group">
                             <textarea className="form-control" onChange={handleChangeRegManufacturer('terms')} placeholder="What are your standard payment terms?" value={regManufacturerValues.terms} />
@@ -360,31 +460,32 @@ const manufacture = (props) => {
                             <textarea className="form-control" onChange={handleChangeRegManufacturer('importantClients')} placeholder="Can you state the names of 5 of your most important clients" value={regManufacturerValues.importantClients} />
                         </div>
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegManufacturer('heading')} placeholder="Profile heading *" value={regManufacturerValues.heading} />
+                            <input type="text" onChange={handleChangeRegManufacturer('heading')} placeholder="Profile heading *" value={regManufacturerValues.heading} ref={headingRef} />
                         </div>
                       
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegManufacturer('factoryInfo')} placeholder="Please share as much information *" value={regManufacturerValues.factoryInfo} />
+                            <input type="text" onChange={handleChangeRegManufacturer('factoryInfo')} placeholder="Please share as much information *" value={regManufacturerValues.factoryInfo} ref={factoryInfoRef} />
                         </div>
     
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegManufacturer('addressLine1')} placeholder="First line of address *" value={regManufacturerValues.addressLine1}  />
+                            <input type="text" onChange={handleChangeRegManufacturer('addressLine1')} placeholder="First line of address *" value={regManufacturerValues.addressLine1} ref={addressLine1Ref}  />
                         </div>
                         <div className="form-group">
                             <input type="text" onChange={handleChangeRegManufacturer('addressLine2')} placeholder="Second line of address" value={regManufacturerValues.addressLine2} />
                         </div>
                         <div className="form-group form-group-change">
-                            <select onChange={handleChangeRegManufacturer('city')} placeholder="City *" defaultValue={regManufacturerValues.city} >
+                            <input type="text" onChange={handleChangeRegManufacturer('zipCode')} placeholder="Zip Code *" value={regManufacturerValues.zipCode} ref={zipCodeRef} />
+
+                            <select onChange={handleChangeRegManufacturer('city')} placeholder="City *" defaultValue={regManufacturerValues.city} ref={cityRef} >
                                 <option value="" disabled="" hidden="">City *</option>
                                 <option value="volvo">America</option>
                                 <option value="saab">London</option>
                                 <option value="mercedes">Canada</option>
                                 <option value="audi">Austrailia</option>
-                            </select>
-                            <input type="text" onChange={handleChangeRegManufacturer('zipCode')} placeholder="Zip Code *" value={regManufacturerValues.zipCode} />
+                            </select>                     
                         </div>
                         <div className="form-group form-group-change full-width">
-                            <select onChange={handleChangeRegManufacturer('country')} placeholder="Country *" value={regManufacturerValues.country}>
+                            <select onChange={handleChangeRegManufacturer('country')} placeholder="Country *" value={regManufacturerValues.country} ref={countryRef}>
                                 <option value="" disabled=""  hidden="">Country *</option>
                                 <option value="volvo">America</option>
                                 <option value="saab">London</option>
@@ -396,7 +497,7 @@ const manufacture = (props) => {
                         <div className="form-group form-group-change  upload">
                             <a href="#">Please share any certifications and/or Audits that you have *</a>
                             <label htmlFor="myCertification">Upload</label>
-                            <input onChange={handleChangeRegManufacturer('certifications')} type="file" multiple id="myCertification" name="certifications" />
+                            <input onChange={handleChangeRegManufacturer('certifications')} type="file" multiple id="myCertification" name="certifications" ref={certificationsRef} />
                         </div>
 
                         <div style={{display:'grid',gridTemplateColumns:'auto auto auto'}}>
@@ -417,7 +518,7 @@ const manufacture = (props) => {
                         <div className="form-group form-group-change  upload">
                             <a href="#">Please share between 5-10 photos of your factory and your products for Brands to see. *</a>
                             <label htmlFor="myMultiphoto">Upload</label>
-                            <input  type="file" multiple onChange={handleChangeRegManufacturer('multiphotos')}  accept="image/*" id="myMultiphoto" name="multiphotos" />
+                            <input  type="file" multiple onChange={handleChangeRegManufacturer('multiphotos')}  accept="image/*" id="myMultiphoto" name="multiphotos" ref={multiphotosRef} />
                         </div>
                         <div style={{display:'grid',gridTemplateColumns:'auto auto auto'}}>
                             {regManufacturerValues.multiphotos.length>0 && regManufacturerValues.multiphotos.map((item,i)=>(
@@ -434,21 +535,21 @@ const manufacture = (props) => {
                         </div>
                         
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegManufacturer('firstName')} placeholder="First name *" value={regManufacturerValues.firstName} />
+                            <input type="text" onChange={handleChangeRegManufacturer('firstName')} placeholder="First name *" value={regManufacturerValues.firstName} ref={firstNameRef} />
                         </div>
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegManufacturer('lastName')} placeholder="Last name *" value={regManufacturerValues.lastName} />
+                            <input type="text" onChange={handleChangeRegManufacturer('lastName')} placeholder="Last name *" value={regManufacturerValues.lastName} ref={lastNameRef} />
                         </div>
                         <div className="form-group">
-                            <input type="email" onChange={handleChangeRegManufacturer('email')} onBlur={handleClick('email')} placeholder="Email *" value={regManufacturerValues.email}  />
+                            <input type="email" onChange={handleChangeRegManufacturer('email')} onBlur={handleClick('email')} placeholder="Email *" value={regManufacturerValues.email} ref={emailRef}  />
                         </div>
                         <div className="form-group" style={{display:"flex",flexDirection:'row'}}>
-                            <input type={visibility} onChange={handleChangeRegManufacturer('password')} onBlur={handleClick('password')} placeholder="Password *"  value={regManufacturerValues.password}  />
+                            <input type={visibility} onChange={handleChangeRegManufacturer('password')} onBlur={handleClick('password')} placeholder="Password *"  value={regManufacturerValues.password} ref={passwordRef}  />
                             <input type="checkbox" onClick={(e)=>(togglevisibility('password'))} id="toggle" style={{width:'10%'}} hidden />
                             <label htmlFor="toggle">{visibility=='password' ?<VisibilityIcon /> :<VisibilityOffIcon />}</label>
                         </div>
                         <div className="form-group" style={{display:"flex",flexDirection:'row'}}>
-                            <input type={visibility1} onChange={handleChangeRegManufacturer('password1')} placeholder="Confirm Password *" value={regManufacturerValues.password1} />
+                            <input type={visibility1} onChange={handleChangeRegManufacturer('password1')} placeholder="Confirm Password *" value={regManufacturerValues.password1} ref={password1Ref} />
                             <input type="checkbox" onClick={(e)=>(togglevisibility('password1'))} id="toggle1" style={{width:'10%'}} hidden />
                             <label htmlFor="toggle1">{visibility1=='password' ?<VisibilityIcon /> :<VisibilityOffIcon />}</label>
                         </div>

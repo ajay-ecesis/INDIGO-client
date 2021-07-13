@@ -1,4 +1,4 @@
-import  {useState, useContext} from 'react'
+import  {useState, useContext,useEffect} from 'react'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,6 +23,10 @@ import axios from 'axios';
 import {Context} from '../../../context'
 import {toast} from 'react-toastify'
 import {useRouter} from 'next/router'
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 function Copyright() {
   return (
@@ -119,11 +123,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminLayout = ({children}) => {
-
+  const [anchorEl, setAnchorEl] = useState(null);
     // state
     const {state, dispatch} = useContext(Context);
     const { user } = state;
-
+    const [notifications,setnotifications] = useState([]);
+    const [notificationloading,setnotificationloading] = useState(false);
     // router
     const router = useRouter();
 
@@ -138,6 +143,117 @@ const AdminLayout = ({children}) => {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    useEffect(async()=>{
+      try{
+        const {data} = await axios.get(`/api/admin/notifications`);
+        // console.log("notifications",data)
+        setnotifications(data);
+
+      }catch(error){
+        console.log(error)
+      }
+      
+    },[])
+
+    const displayNotification = (data)=>{
+      switch (data.type) {
+        case 0:
+          return `${data?.actionby?.firstName} created a new account`;
+        case 1:
+          return `${data?.user?.firstName} approved by ${data?.actionby?.firstName}`;
+        case 2:
+          return `${data?.user?.firstName} rejected by ${data?.actionby?.firstName} `
+      }
+    }
+       
+    
+    // pending functionality
+    
+    const handleNotification = async(notification)=>{
+      setnotificationloading(true);
+      const {data} = await axios.put(`/api/admin/messages/markasread`,{
+        id:notification._id
+      })
+      // console.log("Notification data",data)
+      if(data.type===0){
+        // Registration notification
+                if(data.actionby.role === 0){
+                  const doc = await axios.put(`/api/admin/getbrandfromuserid`,{
+                    id:data.actionby._id
+                })
+              // console.log("brand from user",doc.data)
+                if(doc.data){
+                  router.push(`/admin/brands/${doc.data._id}`)
+                }
+            
+            }
+              if(data.actionby.role === 1){
+                  const doc = await axios.put(`/api/admin/getmanufacturerfromuserid`,{
+                    id:data.actionby._id
+                  })
+                  if(doc.data){
+                    router.push(`/admin/manufacturer/${doc.data._id}`)
+                  }
+              
+              }
+     
+      }
+      if(data.type === 1){
+        // Approved by admin notification
+        if(data.user.role === 0){
+          const doc = await axios.put(`/api/admin/getbrandfromuserid`,{
+            id:data.user._id
+        })
+      // console.log("brand from user",doc.data)
+        if(doc.data){
+          router.push(`/admin/brands/${doc.data._id}`)
+        }
+    
+    }
+      if(data.user.role === 1){
+          const doc = await axios.put(`/api/admin/getmanufacturerfromuserid`,{
+            id:data.user._id
+          })
+          if(doc.data){
+            router.push(`/admin/manufacturer/${doc.data._id}`)
+          }
+      
+      }
+      }
+      if(data.type===2){
+        //admin reject notification
+        if(data.user.role === 0){
+          const doc = await axios.put(`/api/admin/getbrandfromuserid`,{
+            id:data.user._id
+        })
+      // console.log("brand from user",doc.data)
+        if(doc.data){
+          router.push(`/admin/brands/${doc.data._id}`)
+        }
+    
+    }
+      if(data.user.role === 1){
+          const doc = await axios.put(`/api/admin/getmanufacturerfromuserid`,{
+            id:data.user._id
+          })
+          if(doc.data){
+            router.push(`/admin/manufacturer/${doc.data._id}`)
+          }
+      
+      }
+      }
+      setnotificationloading(false)
+    }
+    //pending functionality
 
     // logout function
     const logout = async() => {
@@ -165,6 +281,27 @@ const AdminLayout = ({children}) => {
                 <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                     Indigo
                 </Typography>
+
+                <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClick}>
+                  <Badge badgeContent={notifications?.length} color="secondary">
+                    <NotificationsIcon />
+                    
+                  </Badge>
+                </IconButton>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+              
+                >
+                  {notifications.length > 0 ? notifications?.map((data,i)=>(
+                    
+                   !data.isread && <MenuItem disabled={notificationloading} key={i} onClick={()=>handleNotification(data)}>{displayNotification(data)} <hr /></MenuItem>
+                    
+                  )) : <MenuItem >No new notifications</MenuItem>}
+                </Menu>
                 <IconButton color="inherit" button onClick={() => logout()}>
                     {/* <Badge badgeContent={4} color="secondary"> */}
                     <ExitToApp />

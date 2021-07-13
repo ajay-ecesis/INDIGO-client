@@ -1,13 +1,12 @@
+import {useState, useRef, useEffect} from 'react'
 import Navbar from "../pagecomponents/Navbar";
 import { client } from "../utils/sanity";
 import Head from "next/head";
 import {toast} from 'react-toastify'
-import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Footer from '../pagecomponents/Footer';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-//import PasswordRoute from '../pagecomponents/routes/PasswordRoute';
 
 const brandregister = (props) => {
 
@@ -18,12 +17,23 @@ const brandregister = (props) => {
 
     const [open, setOpen] = useState(false);
 
+    // For Input Focus
+    const brandNameRef = useRef();
+    const urlRef = useRef();
+    const firstNameRef = useRef();
+    const lastNameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const password1Ref = useRef();
+    const cityRef = useRef();
+    const countryRef = useRef();
+    const zipCodeRef = useRef();
+
     const loadCategory = async() => {
         try {
             const {data} = await axios.get('/api/get/active/categories');
             setCategories(data);
         } catch (error) {
-            console.log("Error", error);
             toast.error(error.response.data);
         }
     }
@@ -33,7 +43,6 @@ const brandregister = (props) => {
             const {data} = await axios.get('/api/get/active/markets');
             setMarkets(data);
         } catch (error) {
-            console.log("Error", error);
             toast.error(error.response.data);
         }
     }
@@ -62,6 +71,12 @@ const brandregister = (props) => {
     })
 
     const handleChangeRegBrand = name => event => {
+        if(name === "city"){
+            cityRef.current.style.border = '';
+        }
+        else if(name === "country"){
+            countryRef.current.style.border = '';
+        }
         setRegBrandValues({...regBrandValues, [name]:event.target.value, loading: false})
     }
 
@@ -93,9 +108,44 @@ const brandregister = (props) => {
             return window.scrollTo(0, 0);
          
         } catch (error) {
-            console.log("Error", error);
+            var err = error.response.data;
+            if(err.allEmpty){
+                brandNameRef.current.focus()
+            }
+            else if(err.brandName){
+                brandNameRef.current.focus()
+            }
+            else if(err.url){
+                urlRef.current.focus()
+            }
+            else if(err.firstName){
+                firstNameRef.current.focus()
+            }
+            else if(err.lastName){
+                lastNameRef.current.focus()
+            }
+            else if(err.email){
+                emailRef.current.focus()
+            }
+            else if(err.password){
+                passwordRef.current.focus()
+            }
+            else if(err.password1){
+                password1Ref.current.focus()
+            }
+            else if(err.city){
+                cityRef.current.style.border = '1px solid red';
+                cityRef.current.focus()
+            }
+            else if(err.zipCode){
+                zipCodeRef.current.focus()
+            }
+            else if(err.country){
+                countryRef.current.style.border = '1px solid red';
+                countryRef.current.focus()
+            }
             setRegBrandValues({...regBrandValues, loading:false});
-            toast.error(error.response.data);
+            toast.error(err.message);
         }
     }
 
@@ -128,7 +178,7 @@ const brandregister = (props) => {
             return (
                 <>
                     <div className="form-heading">
-                        <h6>Registration Successfull, Please <a style={{textDecoration:'underline', color:'#106eea'}} href="/signin">Login</a> to continue.</h6>
+                    <h6>Thanks for registering with us. You will get an email once your registration is approved.</h6>
                     </div>
             </>
             )
@@ -175,10 +225,10 @@ const brandregister = (props) => {
                     </div>
                     {!open ? <form onSubmit={clickSubmitRegBrand}>
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegBrand('brandName')} placeholder="Brand name *" value={regBrandValues.brandName} />
+                            <input type="text" onChange={handleChangeRegBrand('brandName')} placeholder="Brand name *" value={regBrandValues.brandName} ref={brandNameRef} />
                         </div>
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegBrand('url')} placeholder="Website url" value={regBrandValues.url} />
+                            <input type="text" onChange={handleChangeRegBrand('url')} placeholder="Website url" value={regBrandValues.url} ref={urlRef} />
                         </div>
                         <div className="form-group form-group-change full-width">
                             <select
@@ -207,17 +257,18 @@ const brandregister = (props) => {
                             <input type="text" onChange={handleChangeRegBrand('linkedIn')} placeholder="LinkedIn" value={regBrandValues.linkedIn} />
                         </div>
                         <div className="form-group form-group-change">
-                            <select onChange={handleChangeRegBrand('city')} defaultValue={regBrandValues.city} placeholder="City">
+                            <input type="text" onChange={handleChangeRegBrand('zipCode')} placeholder="Zip Code *" value={regBrandValues.zipCode} ref={zipCodeRef} />
+                            
+                            <select onChange={handleChangeRegBrand('city')} defaultValue={regBrandValues.city} placeholder="City" ref={cityRef}>
                                 <option value="" disabled  hidden>City *</option>
                                 <option value="volvo">America</option>
                                 <option value="saab">London</option>
                                 <option value="mercedes">Canada</option>
                                 <option value="audi">Austrailia</option>
-                            </select>
-                            <input type="text" onChange={handleChangeRegBrand('zipCode')} placeholder="Zip Code *" value={regBrandValues.zipCode}/>
+                            </select>           
                         </div>
                         <div className="form-group form-group-change full-width">
-                            <select onChange={handleChangeRegBrand('country')} placeholder="Country" defaultValue={regBrandValues.country}>
+                            <select onChange={handleChangeRegBrand('country')} placeholder="Country" defaultValue={regBrandValues.country} ref={countryRef}>
                                 <option value="" disabled  hidden>Country *</option>
                                 <option value="volvo">America</option>
                                 <option value="saab">London</option>
@@ -230,23 +281,23 @@ const brandregister = (props) => {
                         </div>
                         
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegBrand('firstName')} placeholder="First name *" value={regBrandValues.firstName} />
+                            <input type="text" onChange={handleChangeRegBrand('firstName')} placeholder="First name *" value={regBrandValues.firstName} ref={firstNameRef} />
                         </div>
                         <div className="form-group">
-                            <input type="text" onChange={handleChangeRegBrand('lastName')} placeholder="Last name *" value={regBrandValues.lastName} />
+                            <input type="text" onChange={handleChangeRegBrand('lastName')} placeholder="Last name *" value={regBrandValues.lastName} ref={lastNameRef} />
                         </div>
                         <div className="form-group">
-                            <input type="email" onChange={handleChangeRegBrand('email')} onBlur={handleClick('email')} placeholder="Email *" value={regBrandValues.email} />
+                            <input type="email" onChange={handleChangeRegBrand('email')} onBlur={handleClick('email')} placeholder="Email *" value={regBrandValues.email} ref={emailRef} />
                         </div>
                         <div className="form-group" style={{display:"flex",flexDirection:'row'}}>
-                            <input type={visibility} onChange={handleChangeRegBrand('password')} onBlur={handleClick('password')} placeholder="Password *" value={regBrandValues.password} />
+                            <input type={visibility} onChange={handleChangeRegBrand('password')} onBlur={handleClick('password')} placeholder="Password *" value={regBrandValues.password} ref={passwordRef} />
                             <input type="checkbox" onClick={(e)=>(togglevisibility('password'))} id="toggle" style={{width:'10%'}} hidden />
-                            <label htmlFor="toggle">{visibility=='password' ?<VisibilityIcon /> :<VisibilityOffIcon />}</label>
+                            <label htmlFor="toggle">{visibility === 'password' ? <VisibilityIcon /> :<VisibilityOffIcon />}</label>
                         </div>
                         <div className="form-group" style={{display:"flex",flexDirection:'row'}}>
-                            <input type={visibility1} onChange={handleChangeRegBrand('password1')} placeholder="Confirm Password *" value={regBrandValues.password1} />
+                            <input type={visibility1} onChange={handleChangeRegBrand('password1')} placeholder="Confirm Password *" value={regBrandValues.password1} ref={password1Ref} />
                             <input type="checkbox" onClick={(e)=>(togglevisibility('password1'))} id="toggle1" style={{width:'10%'}} hidden />
-                            <label htmlFor="toggle1">{visibility1=='password' ?<VisibilityIcon /> :<VisibilityOffIcon />}</label>
+                            <label htmlFor="toggle1">{visibility1 === 'password' ? <VisibilityIcon /> :<VisibilityOffIcon />}</label>
                         </div>
                         
                         <div className="bottom-btn">
@@ -273,9 +324,8 @@ export default brandregister;
 
 
 export async function getServerSideProps(context) {
-    // console.log("the context",context)
+    
     let nav = await client.fetch(`*[_id=="navbar"]{navlinks[]->}`);
-    console.log("the navbar",nav)
 
     let prevUrl = "/";
     if(context.req.headers.referer){
