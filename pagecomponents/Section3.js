@@ -178,7 +178,7 @@ console.log("section3" ,slider)
                                         <div className="card-thumb">
                                            { product.mainimage && <img src={urlFor(product?.mainimage)} alt="" />}
                                         </div>
-                                        <p className="feature-tag">Featured</p>
+                                       <p className="feature-tag">{product?.imagetext}</p>
                                         <div className="card-content">
                                             <h5 className="cardTitle">{product?.companyname}</h5>
                                             <p className="cardDisc txt-light txt-light">{product?.companytype}</p>
