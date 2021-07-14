@@ -273,6 +273,20 @@ const EditProfile = () => {
         { label:"4 Weeks",value: "4 Weeks"},
     ])
 
+    const [countryList] = useState([
+        { label:"America",value: "America"},
+        { label:"London",value: "London"},
+        { label:"Canada",value: "Canada"},
+        { label:"Australia",value: "Australia"},
+    ])
+
+    const [cityList] = useState([
+        { label:"America",value: "America"},
+        { label:"London",value: "London"},
+        { label:"Canada",value: "Canada"},
+        { label:"Australia",value: "Australia"},
+    ])
+
     const removeCertification = (e,i) => {
         e.preventDefault();
         var img1 = [...ManufacturerValues.certifications];
@@ -463,7 +477,19 @@ const EditProfile = () => {
                     </div>
                     <div className="form-group">
                         <label className="text-muted">City<span style={{color:"red"}}> *</span></label>
-                        <input onChange={handleChange('city')} type="text" className="form-control" value={city} required/>
+                        <select required
+                            onChange={handleChange('city')} 
+                            className="form-control">
+                                <option>Country</option> {
+                                    cityList.map(s =>(
+                                        (city === s.value ? 
+                                            <option selected key={s.value} value={s.value}>
+                                                {s.value}
+                                            </option> :
+                                            <option key={s.value} value={s.value}>{s.value}</option>)
+                                    ))
+                                }                                                           
+                            </select>
                     </div>
                     <div className="form-group">
                         <label className="text-muted">Zip Code<span style={{color:"red"}}> *</span></label>
@@ -471,7 +497,19 @@ const EditProfile = () => {
                     </div>
                     <div className="form-group">
                         <label className="text-muted">Country<span style={{color:"red"}}> *</span></label>
-                        <input onChange={handleChange('country')} type="text" className="form-control" value={country} required/>
+                        <select required
+                            onChange={handleChange('country')} 
+                            className="form-control">
+                                <option>Country</option> {
+                                    countryList.map(s =>(
+                                        (country === s.value ? 
+                                            <option selected key={s.value} value={s.value}>
+                                                {s.value}
+                                            </option> :
+                                            <option key={s.value} value={s.value}>{s.value}</option>)
+                                    ))
+                                }                                                           
+                            </select>
                     </div>
                 </div> 
 

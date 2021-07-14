@@ -261,19 +261,19 @@ const brandregister = (props) => {
                             
                             <select onChange={handleChangeRegBrand('city')} defaultValue={regBrandValues.city} placeholder="City" ref={cityRef}>
                                 <option value="" disabled  hidden>City *</option>
-                                <option value="volvo">America</option>
-                                <option value="saab">London</option>
-                                <option value="mercedes">Canada</option>
-                                <option value="audi">Austrailia</option>
+                                <option value="America">America</option>
+                                <option value="London">London</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
                             </select>           
                         </div>
                         <div className="form-group form-group-change full-width">
                             <select onChange={handleChangeRegBrand('country')} placeholder="Country" defaultValue={regBrandValues.country} ref={countryRef}>
                                 <option value="" disabled  hidden>Country *</option>
-                                <option value="volvo">America</option>
-                                <option value="saab">London</option>
-                                <option value="mercedes">Canada</option>
-                                <option value="audi">Austrailia</option>
+                                <option value="America">America</option>
+                                <option value="London">London</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
                             </select>
                         </div>
                         <div className="mid-heading">
