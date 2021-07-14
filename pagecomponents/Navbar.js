@@ -127,8 +127,8 @@ const Navbar = (props) => {
                             </div> }
                             {user !== null && 
                                 <div className="manufacturer_brand_btn">
-                                    {Number(user.role) === 0 ? <a href="/brand/dashboard">Dashboard</a> : (Number(user.role) === 1 ? <a href="/manufacturer/dashboard">Dashboard</a> : Number(user.role) === 2 && <a href="/admin/dashboard">Dashboard</a>)}
-                                    <span onClick={logout} style={{cursor:'pointer'}}>Logout</span>
+                                    {Number(user.role) === 0 ? <a href="/brand/dashboard">Dashboard</a> : (Number(user.role) === 1 ? <a href="/manufacturer/dashboard">Dashboard</a> : Number(user.role) === 2 && <a href="/admin/dashboard">Dashboard</a>)}&nbsp;
+                                    <a onClick={logout} style={{cursor:'pointer'}}>Logout</a>
                                 </div>
                             }
                         </div>
