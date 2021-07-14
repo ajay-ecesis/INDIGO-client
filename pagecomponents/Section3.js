@@ -2,10 +2,33 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BlockContent from '@sanity/block-content-to-react';
+import { urlFor } from "../utils/tools";
 
-const Section3 = ({content})=>{
+
+const Section3 = ({content,slider})=>{
 
 
+    const overrides = {
+        normal: props => <span className="Label" {...props} />,
+        h5: props => <span className="value" {...props} />,
+      }
+      
+      const serializers = {
+        types: {
+          block: props =>
+            // Check if we have an override for the “style”
+            overrides[props.node.style] 
+              // if so, call the function and pass in the children, ignoring
+              // the other unnecessary props
+              ? overrides[props.node.style]({ children: props.children })
+      
+              // otherwise, fallback to the provided default with all props
+              : BlockContent.defaultSerializers.types.block(props),
+        }
+      }
+
+
+console.log("section3" ,slider)
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
@@ -77,6 +100,64 @@ const Section3 = ({content})=>{
         ]
       };
 
+      const showrating = (rating)=>{
+          switch (rating) {
+              case 5:
+                 return  <>
+                      <label htmlFor="star5" title="text">5 stars</label>
+                 {/* <input className="star-inner" type="radio" id="star5" name="rate" value="5" /> */}
+               <label htmlFor="star5" title="text">5 stars</label>
+               {/* <input className="star-inner" type="radio" id="star4" name="rate" value="4" /> */}
+               <label htmlFor="star4" title="text">4 stars</label>
+               {/* <input className="star-inner" type="radio" id="star3" name="rate" value="3" /> */}
+               <label htmlFor="star3" title="text">3 stars</label>
+               {/* <input type="radio" id="star2" name="rate" value="2" /> */}
+               <label htmlFor="star2" title="text">2 stars</label>
+               {/* <input type="radio" id="star1" name="rate" value="1" /> */}
+               <label htmlFor="star1" title="text">1 star</label>
+             </>         
+              case 4:
+                  return <>
+                      {/* <input className="star-inner" type="radio" id="star5" name="rate" value="5" /> */}
+                    <label htmlFor="star5" title="text">5 stars</label>
+                    {/* <input className="star-inner" type="radio" id="star4" name="rate" value="4" /> */}
+                    <label htmlFor="star4" title="text">4 stars</label>
+                    {/* <input className="star-inner" type="radio" id="star3" name="rate" value="3" /> */}
+                    <label htmlFor="star3" title="text">3 stars</label>
+                    {/* <input type="radio" id="star2" name="rate" value="2" /> */}
+                    <label htmlFor="star2" title="text">2 stars</label>
+                    {/* <input type="radio" id="star1" name="rate" value="1" /> */}
+                    <label htmlFor="star1" title="text">1 star</label>
+                  </>
+                case 3:
+                    return <>
+                     <label htmlFor="star5" title="text">5 stars</label>
+                    {/* <input className="star-inner" type="radio" id="star4" name="rate" value="4" /> */}
+                    <label htmlFor="star4" title="text">4 stars</label>
+                    {/* <input className="star-inner" type="radio" id="star3" name="rate" value="3" /> */}
+                    <label htmlFor="star3" title="text">3 stars</label>
+                    {/* <input type="radio" id="star2" name="rate" value="2" /> */}
+                    <label htmlFor="star2" title="text">2 stars</label>
+                    </>
+                case 2:
+                    return <>
+                     <label htmlFor="star5" title="text">5 stars</label>
+                    {/* <input className="star-inner" type="radio" id="star4" name="rate" value="4" /> */}
+                    <label htmlFor="star4" title="text">4 stars</label>
+                    {/* <input className="star-inner" type="radio" id="star3" name="rate" value="3" /> */}
+                    <label htmlFor="star3" title="text">3 stars</label>
+                    </>
+                case 1:
+                    return <>
+                        <label htmlFor="star5" title="text">5 stars</label>
+                    {/* <input className="star-inner" type="radio" id="star4" name="rate" value="4" /> */}
+                    <label htmlFor="star4" title="text">4 stars</label>
+                    </>
+          }
+      }
+
+
+
     return(
         <>
          <section className="section products new">
@@ -90,198 +171,33 @@ const Section3 = ({content})=>{
                     <div className="wrapper col-12">
                        
                             <Slider className="row products-slider" {...settings}>
-                            <div className="col-md-4">
+                                {slider.map((product,i)=>(
+                                    <div key={i} className="col-md-4">
                                 
-                                <div className="Card">
-                                    <div className="card-thumb">
-                                        <img src="images/product1.jpg" alt="" />
-                                    </div>
-                                    <p className="feature-tag">Featured</p>
-                                    <div className="card-content">
-                                        <h5 className="cardTitle">East Indigo co.</h5>
-                                        <p className="cardDisc txt-light txt-light">Manufacturer</p>
-                                        <div className="Card-footer">
-                                            <div className="rate">
-                                                <input className="star-inner" type="radio" id="star5" name="rate" value="5" />
-                                                <label htmlFor="star5" title="text">5 stars</label>
-                                                <input className="star-inner" type="radio" id="star4" name="rate" value="4" />
-                                                <label htmlFor="star4" title="text">4 stars</label>
-                                                <input className="star-inner" type="radio" id="star3" name="rate" value="3" />
-                                                <label htmlFor="star3" title="text">3 stars</label>
-                                                <input type="radio" id="star2" name="rate" value="2" />
-                                                <label htmlFor="star2" title="text">2 stars</label>
-                                                <input type="radio" id="star1" name="rate" value="1" />
-                                                <label htmlFor="star1" title="text">1 star</label>
-                                              </div>
-                                            <div className="follower txt-light">
-                                                <span className="value">1.2k</span>
-                                                <span className="Label">followers</span>
+                                    <div className="Card">
+                                        <div className="card-thumb">
+                                           { product.mainimage && <img src={urlFor(product?.mainimage)} alt="" />}
+                                        </div>
+                                        <p className="feature-tag">Featured</p>
+                                        <div className="card-content">
+                                            <h5 className="cardTitle">{product?.companyname}</h5>
+                                            <p className="cardDisc txt-light txt-light">{product?.companytype}</p>
+                                            <div className="Card-footer">
+                                                <div className="rate">
+                                                    {product.rating && showrating(product.rating)}
+                                                
+                                                  </div>
+                                                {/* <div className="follower txt-light"> */}
+                                                    {/* <span className="value">1.2k</span>
+                                                    <span className="Label">followers</span> */}
+                                                   {product.followers && <BlockContent blocks={product?.followers} serializers={serializers} className="follower txt-light"/>}
+                                                {/* </div> */}
                                             </div>
                                         </div>
                                     </div>
+    
                                 </div>
-
-                            </div>
-                            <div className="col-md-4">
-                                
-                                <div className="Card">
-                                    <div className="card-thumb">
-                                        <img src="images/product2.jpg" alt="" />
-                                    </div>
-                                    <p className="feature-tag">Featured</p>
-                                    <div className="card-content">
-                                        <h5 className="cardTitle">Atlantic Mills</h5>
-                                        <p className="cardDisc txt-light">Mills</p>
-                                        <div className="Card-footer">
-                                            <div className="rate">
-                                                <input className="star-inner" type="radio" id="star6" name="rate" value="5" />
-                                                <label htmlFor="star6" title="text">5 stars</label>
-                                                <input className="star-inner" type="radio" id="star7" name="rate" value="4" />
-                                                <label htmlFor="star7" title="text">4 stars</label>
-                                                <input className="star-inner" type="radio" id="star8" name="rate" value="3" />
-                                                <label htmlFor="star8" title="text">3 stars</label>
-                                                <input type="radio" id="star9" name="rate" value="2" />
-                                                <label htmlFor="star9" title="text">2 stars</label>
-                                                <input type="radio" id="star10" name="rate" value="1" />
-                                                <label htmlFor="star10" title="text">1 star</label>
-                                              </div>
-                                            <div className="follower txt-light">
-                                                <span className="value">1.2k</span>
-                                                <span className="Label">followers</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="col-md-4">
-                                
-                                <div className="Card">
-                                    <div className="card-thumb">
-                                        <img src="images/product3.jpg" alt="" />
-                                    </div>
-                                    <p className="feature-tag">Featured</p>
-                                    <div className="card-content">
-                                        <h5 className="cardTitle">Arvind’s Mills</h5>
-                                        <p className="cardDisc txt-light">Mills</p>
-                                        <div className="Card-footer">
-                                            <div className="rate">
-                                                <input className="star-inner" type="radio" id="star5" name="rate" value="5" />
-                                                <label htmlFor="star5" title="text">5 stars</label>
-                                                <input className="star-inner" type="radio" id="star4" name="rate" value="4" />
-                                                <label htmlFor="star4" title="text">4 stars</label>
-                                                <input className="star-inner" type="radio" id="star3" name="rate" value="3" />
-                                                <label htmlFor="star3" title="text">3 stars</label>
-                                                <input type="radio" id="star2" name="rate" value="2" />
-                                                <label htmlFor="star2" title="text">2 stars</label>
-                                                <input type="radio" id="star1" name="rate" value="1" />
-                                                <label htmlFor="star1" title="text">1 star</label>
-                                              </div>
-                                            <div className="follower txt-light">
-                                                <span className="value">1.2k</span>
-                                                <span className="Label">followers</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="col-md-4">
-                                
-                                <div className="Card">
-                                    <div className="card-thumb">
-                                        <img src="images/product1.jpg" alt="" />
-                                    </div>
-                                    <p className="feature-tag">Featured</p>
-                                    <div className="card-content">
-                                        <h5 className="cardTitle">East Indigo co.</h5>
-                                        <p className="cardDisc txt-light">Manufacturer</p>
-                                        <div className="Card-footer">
-                                            <div className="rate">
-                                                <input className="star-inner" type="radio" id="star5" name="rate" value="5" />
-                                                <label htmlFor="star5" title="text">5 stars</label>
-                                                <input className="star-inner" type="radio" id="star4" name="rate" value="4" />
-                                                <label htmlFor="star4" title="text">4 stars</label>
-                                                <input className="star-inner" type="radio" id="star3" name="rate" value="3" />
-                                                <label htmlFor="star3" title="text">3 stars</label>
-                                                <input type="radio" id="star2" name="rate" value="2" />
-                                                <label htmlFor="star2" title="text">2 stars</label>
-                                                <input type="radio" id="star1" name="rate" value="1" />
-                                                <label htmlFor="star1" title="text">1 star</label>
-                                              </div>
-                                            <div className="follower txt-light">
-                                                <span className="value">1.2k</span>
-                                                <span className="Label">followers</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="col-md-4">
-                                
-                                <div className="Card">
-                                    <div className="card-thumb">
-                                        <img src="images/product2.jpg" alt="" />
-                                    </div>
-                                    <p className="feature-tag">Featured</p>
-                                    <div className="card-content">
-                                        <h5 className="cardTitle">Atlantic Mills</h5>
-                                        <p className="cardDisc txt-light">Mills</p>
-                                        <div className="Card-footer">
-                                            <div className="rate">
-                                                <input className="star-inner" type="radio" id="star5" name="rate" value="5" />
-                                                <label htmlFor="star5" title="text">5 stars</label>
-                                                <input className="star-inner" type="radio" id="star4" name="rate" value="4" />
-                                                <label htmlFor="star4" title="text">4 stars</label>
-                                                <input className="star-inner" type="radio" id="star3" name="rate" value="3" />
-                                                <label htmlFor="star3" title="text">3 stars</label>
-                                                <input type="radio" id="star2" name="rate" value="2" />
-                                                <label htmlFor="star2" title="text">2 stars</label>
-                                                <input type="radio" id="star1" name="rate" value="1" />
-                                                <label htmlFor="star1" title="text">1 star</label>
-                                              </div>
-                                            <div className="follower txt-light">
-                                                <span className="value">1.2k</span>
-                                                <span className="Label">followers</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="col-md-4">
-                                
-                                <div className="Card">
-                                    <div className="card-thumb">
-                                        <img src="images/product3.jpg" alt="" />
-                                    </div>
-                                    <p className="feature-tag">Featured</p>
-                                    <div className="card-content">
-                                        <h5 className="cardTitle">Arvind’s Mills</h5>
-                                        <p className="cardDisc txt-light">Mills</p>
-                                        <div className="Card-footer">
-                                            <div className="rate">
-                                                <input className="star-inner" type="radio" id="star5" name="rate" value="5" />
-                                                <label htmlFor="star5" title="text">5 stars</label>
-                                                <input className="star-inner" type="radio" id="star4" name="rate" value="4" />
-                                                <label htmlFor="star4" title="text">4 stars</label>
-                                                <input className="star-inner" type="radio" id="star3" name="rate" value="3" />
-                                                <label htmlFor="star3" title="text">3 stars</label>
-                                                <input type="radio" id="star2" name="rate" value="2" />
-                                                <label htmlFor="star2" title="text">2 stars</label>
-                                                <input type="radio" id="star1" name="rate" value="1" />
-                                                <label htmlFor="star1" title="text">1 star</label>
-                                              </div>
-                                            <div className="follower txt-light">
-                                                <span className="value">1.2k</span>
-                                                <span className="Label">followers</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                                ))}
                             </Slider>
                         
                     </div>

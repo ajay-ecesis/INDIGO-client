@@ -35,7 +35,7 @@ const HomePage = (props)=>{
             {data[0]?.hero && <Banner content={data[0].hero ? data[0].hero : null} />}
         </div>
         {data[0]?.section2 && <Section2 content={data[0]?.section2 ? data[0].section2 : null} />}
-        {data[0]?.section3 && <Section3 content={data[0]?.section3 ? data[0].section3 : null} />}
+        {data[0]?.section3 && <Section3 content={data[0]?.section3 ? data[0].section3 : null} slider={data[0]?.section3slider && data[0]?.section3slider} />}
         {data[0]?.section4 && <Trustbrand content={data[0]?.section4} slider={data[0]?.logoslider} />}
         {data[0]?.formanufactures && <Manufacturer content={data[0].formanufactures} />}
         {data[0]?.forbrands && <Brands content={data[0].forbrands}/>}
