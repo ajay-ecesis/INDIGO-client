@@ -4322,6 +4322,34 @@ li.l-footer02-nav-item.border_custom  {
     margin-bottom: 0;
 }
 
+section.search_result_for_mobile{
+  display: none;
+}
+section.search_result_for_mobile .form_wrapper {
+  background: #fff;
+  padding: 20px;
+  border-radius: 50px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50px);
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 1px 1px 10px #ccc;
+}
+section.search_result_for_mobile .form_wrapper input[type="text"] {
+  border: none;
+}
+section.search_result_for_mobile .form_wrapper [type=submit] {
+  border: none;
+  background: transparent;
+}
+section#results_outer .results.for_mobile {
+  display: none;
+}
+
+
+
 
 
 

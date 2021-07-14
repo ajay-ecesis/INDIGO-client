@@ -3279,6 +3279,104 @@ section.section.select-cloth-section .row .cloth-col p {
     font-size: 12px;
 }
 
+section#search_slider .latest-serach-bottom-section .search-card h6.title {
+  padding-left: 0;
+  padding-top: 0;
+}
+
+section#search_slider .latest-serach-bottom-section .search-card .catagory, section#search_slider .latest-serach-bottom-section .search-card .timing{
+  padding-left: 0;
+}
+.header.dashboard-header.results_header.search_header {
+  display: none;
+}
+section#results_outer .map_side iframe {
+  height: 475px;
+}
+section.search_result_for_mobile{
+  display: block;
+}
+#filter_wrapper_mobile{
+  height: 0;
+  opacity: 0;
+  transition: all 0.5s linear;
+}
+#filter_wrapper_mobile.active{
+  height: auto;
+  opacity: 1;
+}
+ul#filter_wrapper_mobile li.single_filter {
+  float: left;
+}
+.section.latest-search-section.suppliers-section.search_results_list.middle_section {
+  clear: both;
+  padding-top: 20px !important;
+}
+section#results_outer .results.for_desktop{
+  display: none;
+}
+section#results_outer .results.for_mobile {
+  display: block;
+  box-shadow: 0 -5px 40px -5px #ccc;
+  border-radius: 20px 20px 0 0;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child {
+  background: transparent;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child > div {
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child .rate {
+  display: block;
+  width: 100%;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child .title {
+  font-size: 16px;
+  margin-bottom: 5px;
+  padding-left: 0;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child .place {
+  font-size: 9px;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child .bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child .bottom .price-moq .price {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 0;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child .bottom .price-moq span {
+  color: #5d5d5d;
+  font-size: 9px;
+}
+section#results_outer .results.for_mobile .search-card > div:last-child .upper .rate {
+  font-size: 7px;
+}
+section#results_outer.result_wrappper .container-fluid {
+  padding: 0 !important;
+}
+section#results_outer .results.for_mobile .search-card {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0px !important;
+}
+section#results_outer .results.for_mobile .result_count {
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid #D8D8D8;
+  padding-bottom: 10px;
+  width: 90%;
+  margin: 0 auto;
+}
+
 
 }
 

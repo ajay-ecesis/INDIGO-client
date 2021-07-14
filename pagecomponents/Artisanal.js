@@ -2,6 +2,7 @@ import { urlFor } from "../utils/tools"
 import BlockContent from '@sanity/block-content-to-react';
 
 const Artisanal = ({content})=>{
+  
    //updated on night
   const overrides = {
     h2: props => <h2 className="heading" {...props} />,
@@ -47,7 +48,7 @@ const Artisanal = ({content})=>{
                                 <div className="content">
                                 {content?.subheading &&<BlockContent blocks={content?.subheading} serializers={serializers} />}
                                     
-                                    <span><p className="sub_title">{content?.text}</p></span>
+                                   <p className="sub_title">{content?.text}</p>
                                     {/* <a href="/artisanal" className="btn btn-hover btn-black">Explore more</a> */}
                                     {/* changed on night */}
                                     {content.link && <BlockContent blocks={content?.link} serializers={serializerslink} />}
