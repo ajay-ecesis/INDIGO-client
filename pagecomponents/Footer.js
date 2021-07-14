@@ -73,8 +73,8 @@ const Footer = () => {
                                     <h2 className="l-footer02-nav-title js-dropdown-footer c-btn c-btn-hover01"> <img className="country-img" src="/images/united-states.svg" alt="" /> United States<span className="c-btn-bg-bottom"></span><i className="fa fa-chevron-down"></i></h2>
                                     <div className="l-footer02-nav-panel js-dropdown-footer-menu" style={{display: 'none'}}>
                                       <ul className="l-footer02-nav-panel-inner">
-                                        <li className="l-footer02-nav-panel-item"><a href="#">Asia</a></li>
-                                        <li className="l-footer02-nav-panel-item"><a href="#">Europe</a></li>
+                                        <li className="l-footer02-nav-panel-item"><img className="country-img" src="images/asia.png" alt="" /> Asia</li>
+                                        <li className="l-footer02-nav-panel-item"><img className="country-img" src="images/europe.png" alt="" /> Europe</li>
                                        
                                       </ul>
                                     </div>
@@ -149,8 +149,8 @@ const Footer = () => {
                                           <h2 className="l-footer02-nav-title js-dropdown-footer c-btn c-btn-hover01"> <img className="country-img" src="images/united-states.svg" alt="" /> United States<span className="c-btn-bg-bottom"></span><i className="fa fa-chevron-down"></i></h2>
                                           <div className="l-footer02-nav-panel js-dropdown-footer-menu" style={{display: 'none'}}>
                                             <ul className="l-footer02-nav-panel-inner">
-                                              <li className="l-footer02-nav-panel-item"><a href="#">Asia</a></li>
-                                              <li className="l-footer02-nav-panel-item"><a href="#">Europe</a></li>
+                                              <li className="l-footer02-nav-panel-item"><img className="country-img" src="images/asia.png" alt="" /> Asia</li>
+                                              <li className="l-footer02-nav-panel-item"><img className="country-img" src="images/europe.png" alt="" /> Europe</li>
                                              
                                             </ul>
                                           </div>

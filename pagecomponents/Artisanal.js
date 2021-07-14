@@ -1,9 +1,12 @@
+import { client } from "../utils/sanity";
 import { urlFor } from "../utils/tools"
 import BlockContent from '@sanity/block-content-to-react';
+import { useEffect,useState } from "react";
 
 const Artisanal = ({content})=>{
-  
-   //updated on night
+
+  const [btnlink,setbtnlink] = useState('')
+
   const overrides = {
     h2: props => <h2 className="heading" {...props} />,
     normal:props =><p className="title" {...props}></p>
@@ -23,16 +26,22 @@ const Artisanal = ({content})=>{
     }
   }
     
-  const serializerslink = {
-    marks: {  
-      link: ({mark, children}) => {
-        const { href } = mark
-        return <a href={href} className="btn btn-hover btn-black">{children}</a>
-      }
-    }
-  }
 
- 
+
+  // const serializerslink = {
+  //   marks: {  
+  //     link: ({mark, children}) => {
+  //       const { href } = mark
+  //       return <a href={href} className="btn btn-hover btn-black">{children}</a>
+  //     }
+  //   }
+  // }
+
+  useEffect(async ()=>{
+    const link = await client.fetch(`*[_type == "link" && _id =="${content.link._ref}"]`)
+    setbtnlink(`/${link[0]?.slug?.current}`);
+  },[]);
+
 
     return(
         <>
@@ -49,9 +58,10 @@ const Artisanal = ({content})=>{
                                 {content?.subheading &&<BlockContent blocks={content?.subheading} serializers={serializers} />}
                                     
                                    <p className="sub_title">{content?.text}</p>
-                                    {/* <a href="/artisanal" className="btn btn-hover btn-black">Explore more</a> */}
-                                    {/* changed on night */}
-                                    {content.link && <BlockContent blocks={content?.link} serializers={serializerslink} />}
+
+                                    <a href={btnlink} className="btn btn-hover btn-black">{content.buttontext}</a>
+
+                                    {/* {content.link && <BlockContent blocks={content?.link} serializers={serializerslink} />} */}
                                 </div>
                             </div>
                             <div className="col-md-6">
