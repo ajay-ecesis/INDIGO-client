@@ -28,7 +28,7 @@ const HomePage = (props)=>{
   return(
     <>
         <Head>
-          <title>Indigo | Best company</title>
+          <title>Global Fashion Matchmaking Platform | Projekt Indigo</title>
         </Head>
         <div className="main_banner_new home">
             {props.nav && <Navbar preview={props.preview} nav={props.nav} />}
