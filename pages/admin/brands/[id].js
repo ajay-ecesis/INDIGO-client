@@ -83,9 +83,9 @@ const brandDetails = () => {
                         <p className="card-text"><b>First Name : </b>{brand.userId.firstName}</p>
                         <p className="card-text"><b>Last Name : </b>{brand.userId.lastName}</p>
                         <p className="card-text"><b>Email : </b>{brand.userId.email}</p>
-                        <p className="card-text"><b>City: </b>{brand.userId.city}</p>  
-                        <p className="card-text"><b>Zip Code: </b>{brand.userId.zipCode}</p>     
-                        <p className="card-text"><b>Country: </b>{brand.userId.country}</p>
+                        <p className="card-text"><b>City: </b>{brand.city}</p>  
+                        <p className="card-text"><b>Zip Code: </b>{brand.zipCode}</p>     
+                        <p className="card-text"><b>Country: </b>{brand.country}</p>
                         <p className="card-text"><b>Status: </b>{userstatus(brand.userId.status)}</p>                
                     </div>
                 </div>

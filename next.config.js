@@ -281,6 +281,26 @@ module.exports = {
       {
         source:'/api/admin/getmanufacturerfromuserid',
         destination:`${process.env.EXTERNAL_RESOLVER}/api/admin/getmanufacturerfromuserid`
+      },
+      //send password reset link
+      {
+        source:`/api/auth/forgot-password`,
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/auth/forgot-password`
+      },
+      //forgot password reset path
+      {
+        source:`/auth/password/reset`,
+        destination:`${process.env.EXTERNAL_RESOLVER}/api/auth/password/reset`
+      },
+      // add search
+      {
+        source:'/api/create/brands/search',
+        destination: `${process.env.EXTERNAL_RESOLVER}/api/brands/search`
+      },
+      // get Supplier by Search
+      {
+        source:'/api/search/suppliers',
+        destination: `${process.env.EXTERNAL_RESOLVER}/api/search/get/suppliers`
       }
     ]
   },

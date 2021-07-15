@@ -110,8 +110,6 @@ $(".humburger-menu img").click(function(){
 });
 
 
-
-
 $("#productBtn").click(function(){
   $(this).toggleClass("active");
 });

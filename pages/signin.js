@@ -108,7 +108,7 @@ useEffect(()=>{
                                     <input type="checkbox" placeholder="Password" id="rememberMe" name="Your Email" />
                                     <label htmlFor="rememberMe">Remember Me</label>
                                 </div>
-                                <label htmlFor="">Forgot password ?</label>
+                                <a href="/forgot-password">Forgot password ?</a>
                             </div>
                             
                             <div className="bottom-btn">

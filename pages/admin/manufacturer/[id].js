@@ -84,9 +84,9 @@ const manufacturerDetails = () => {
                         <p className="card-text"><b>First Name : </b>{supplier.userId.firstName}</p>
                         <p className="card-text"><b>Last Name : </b>{supplier.userId.lastName}</p>
                         <p className="card-text"><b>Email : </b>{supplier.userId.email}</p>
-                        <p className="card-text"><b>City: </b>{supplier.userId.city}</p>  
-                        <p className="card-text"><b>Zip Code: </b>{supplier.userId.zipCode}</p>     
-                        <p className="card-text"><b>Country: </b>{supplier.userId.country}</p>
+                        <p className="card-text"><b>City: </b>{supplier.city}</p>  
+                        <p className="card-text"><b>Zip Code: </b>{supplier.zipCode}</p>     
+                        <p className="card-text"><b>Country: </b>{supplier.country}</p>
                         <p className="card-text"><b>Status: </b>{supplier.userId.status === 0 ? 'Active' : "Deactivated"}</p>                
                  
                         <p className="card-text"><b>Supplier name : </b>{supplier.supplierName}</p>
