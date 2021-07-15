@@ -9,7 +9,7 @@ import BlockContent from '@sanity/block-content-to-react';
 
 const Artisanal = (props)=>{
 
-    const  postQuery= `*[_type=="siteArtisanal"]{contents,heading1,heading2,"links":contents[]{relatedpage->}}`
+    const  postQuery= `*[_type=="siteArtisanal"]{contents,mainimage,heading1,heading2,"links":contents[]{relatedpage->}}`
 
     const {data} = usePreviewSubscription(postQuery, {
       initialData: props.data,
@@ -34,7 +34,8 @@ const Artisanal = (props)=>{
                             <a className="backArrow" href={props.prevUrl}> <img src="images/back-arrow.svg" alt="" /> </a>
                         </div>
                     <div className="bg-img_about bg-img_banner">
-                        <img src="images/aristanal_new.png" alt="" />
+                        {/* <img src="images/aristanal_new.png" alt="" /> */}
+                        <img src={urlFor(data[0]?.mainimage)}/>
                     </div>
                         <div className="container-fluid">
                             <div className="banner-inner row">
@@ -101,10 +102,10 @@ export async function getServerSideProps(context) {
 
     if(context.preview){
        
-        data = await client.fetch('*[_type=="siteArtisanal"]{contents,heading1,heading2,"links":contents[]{relatedpage->}}');
+        data = await client.fetch('*[_type=="siteArtisanal"]{contents,mainimage,heading1,heading2,"links":contents[]{relatedpage->}}');
     }
     else{
-        data = await clientRead.fetch('*[_type=="siteArtisanal"]{contents,heading1,heading2,"links":contents[]{relatedpage->}}');
+        data = await clientRead.fetch('*[_type=="siteArtisanal"]{contents,mainimage,heading1,heading2,"links":contents[]{relatedpage->}}');
     }
     // console.log("artisanal data",data)
     if (!data) {

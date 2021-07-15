@@ -98,7 +98,7 @@ const Detail = (props)=>{
                 <div className="banner ">
                     <div id="bannerWrapper" className="banner-wrapper">
                       <div className="bg-img_about bg-img_banner">
-                        <img src="images/sustailabilty_new.png" alt="" />
+                        <img src={urlFor(data[0]?.mainimage)} /> 
                       </div>
                         <div className="container-fluid">
                             <div className="banner-inner row">
@@ -124,7 +124,7 @@ const Detail = (props)=>{
                 <div className="container-fluid about">           
                     <div className="row">
                         <div className="col-md-12">
-                            <img src="images/sustainability.png" alt="" />                  
+                            <img src={urlFor(data[0]?.bottomimage)} />                 
                         </div>
                     </div>
                 </div>

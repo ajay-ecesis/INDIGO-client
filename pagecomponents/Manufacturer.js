@@ -1,4 +1,3 @@
-
 import { urlFor } from "../utils/tools"
 import BlockContent from '@sanity/block-content-to-react';
 
@@ -43,7 +42,7 @@ const Manufacturer = ({content})=>{
                             <div className="content-wrapper">
                                 <p className="info">{content?.description1}</p>
                                 <div className="title">
-                                    Features
+                                    {content?.title}
                                 </div>
                                 {content?.featureImages &&  <div className="row gallery2" >
                                   {content.featureImages.map((item,i)=>(

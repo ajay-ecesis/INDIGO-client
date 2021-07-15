@@ -76,9 +76,9 @@ const Explore = (props)=>{
                         <div className="row new_custom">
                             <div className="col-md-12 section-head text-center">
                                 <div className="col-md-12 section-head text-center text-new-center">
-                                    <span className="heading__span">Explore</span>
+                                    <span className="heading__span">{data[0]?.heading}</span>
                                     <h2 className="heading">
-                                        How it works
+                                        {data[0]?.subheading}
                                     </h2>
                                 </div>
 
@@ -102,7 +102,7 @@ const Explore = (props)=>{
 
                             <div className="col-md-12 manufacturers-content">
                                 {data[0]?.manufacturedescription && <p className="info">{data[0].manufacturedescription} </p>}
-                                {data[0]?.featuresmanufacturer && <> <div className="title">Features</div>
+                                {data[0]?.featuresmanufacturer && <> <div className="title">{data[0]?.manufacturertitle}</div>
                                 <Features content={data[0]?.featuresmanufacturer} /></>}
                                 
                                 <div className="bottom-btn">
@@ -128,7 +128,7 @@ const Explore = (props)=>{
 
                             <div className="col-md-12 manufacturers-content">
                                 {data[0]?.branddescription && <p className="info">{data[0].branddescription}</p>}
-                                {data[0]?.featuresbrand && <><div className="title">Features</div>
+                                {data[0]?.featuresbrand && <><div className="title">{data[0]?.brandtitle}</div>
                                     <Features content={data[0]?.featuresbrand} /></>} 
                                 <div className="bottom-btn">
                                     <a className="btn btn-yellow brand_open" href="/brandregister">Register as brand</a>
