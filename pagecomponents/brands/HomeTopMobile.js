@@ -5,7 +5,7 @@ import {toast} from 'react-toastify'
 
 const HomeTopMobile = () => {
 
-    const {state:{user}} = useContext(Context);
+    const {state:{user}, dispatch} = useContext(Context);
 
     // logout function
     const logout = async() => {

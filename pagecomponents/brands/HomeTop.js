@@ -5,7 +5,7 @@ import {toast} from 'react-toastify'
 
 const HomeNavbar = () => {
 
-    const {state:{user}} = useContext(Context);
+    const {state:{user}, dispatch} = useContext(Context);
 
     const [values, setValues] = useState({
         category:'',
